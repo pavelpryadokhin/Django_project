@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-</head>
-<body>
-{% if form %}
-<br>
-<h2>Отправьте заполненную анкету</h2><br>
-<form method="post">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" value='Отправить'>
-</form>
-{% else %}
-<br>
-<h2>Спасибо!</h2><br>
-{% endif %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Anketa{% endblock title %}
+{% block content %}
+	{% if form %}
+		<br>
+		<h2>Отправьте заполненную анкету</h2><br>
+		<form method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value='Отправить'>
+		</form>
+	{% else %}
+		<br>
+		<h2>Спасибо!</h2><br>
+	{% endif %}
+{% endblock content %}

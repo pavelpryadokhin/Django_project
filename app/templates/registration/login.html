@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-</head>
-<body>
-<h2>Log In</h2>
-<form method="post">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<button type="submit">Log In</button>
-</form>
-</body>
-</html>
+{% extends 'base.html' %}  &nbsp;
+{% load crispy_forms_tags %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+	<div class="card">
+		<div class="card-body">
+			<h4 class="card-title">Войдите в ваш аккаунт</h4>
+
+			<form method="POST">
+				{% csrf_token %}
+				<input type="hidden" name="next" value="{{ next }}">
+
+				{{ form.as_p }}
+
+				<button type="submit" class="btn btn-primary ">Войти</button>
+			</form>
+		</div>
+	</div>
+{% endblock content %}

@@ -6,6 +6,8 @@ from .forms import AnketaForm
 from datetime import datetime
 from .models import Post
 
+
+
 # Create your views here.
 # TODO:  make this
 
@@ -13,6 +15,9 @@ from .models import Post
 class BlogListView(ListView):
     model = Post
     template_name = 'home.html'
+
+    paginate_by = 1
+
 
 
 
