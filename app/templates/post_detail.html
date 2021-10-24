@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+<style>{%block style%}
+    h3 {
+        color: deepskyblue;
+    }
+    .comment {
+        border: 1px solid red;
+        padding: 10px;
+    }
+{% endblock style %}</style>
+{% block content %}
+	<div>
+		<h1>{{ get_post.title }}</h1>
+		{#	{%if instance.image%}#}
+		{#	<p><img src="{{instance.image.url}}" class="img-resposive"></p>#}
+		{#	{%endif%}#}
+		<p>{{ get_post.body | linebreaks }}</p>
+		<p><i>Создан: {{ get_post.timestamp }} Обновлен: {{ get_post.updated }}</i></p>
+		<p>Автор:{{ get_post.author }}</p>
+		{% if  get_post.comments.all%}
+			<p>Комментарии:</p>
+			{% for i in get_post.comments.all %}
+				<div class="comment">
+					<p>{{ forloop.counter }}</p>
+					<p>{{ i.comment_text }}</p>
+					<hr>
+					<p>Создан: {{ i.timepublish }}&nbsp;Автор: {{ i.author }}</p>
+				</div>
+			{% endfor %}
+			{% with get_post.comments.count as total_comments %}
+				<p><i>Всего комметариев:{{ total_comments }}</i></p>
+			{% endwith %}
+		{% else %}
+			<p>Пока нет комментариев</p>
+		{% endif %}
+		{% if request.user.is_authenticated %}
+			<h3>Добавить комментарий</h3>
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<input type="submit" value='Добавить комментарий'>
+			</form>
+		{% endif %}
+	</div>
+	<hr>
+	{#<a href="{% url 'app:update' id=instance.id%}" type="button" class="btn btn-secondary btn-sm"> Редактировать</a>#}
+	{#<a href="{% url 'app:delete' id=instance.id%}" type="button" class="btn btn-secondary btn-sm"> Удалить</a>#}
+	<hr>
+	<p><i><a href="{% url 'app:home' %}" type="button" class="btn btn-secondary btn-sm"> На главную страницу</a></i></p>
+{% endblock content %}

@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpRequest
-from django.views.generic import ListView
-from .forms import AnketaForm
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormMixin
+from .forms import AnketaForm, CommentForm
 from datetime import datetime
-from .models import Post
-
+from .models import Articles
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -13,34 +14,34 @@ from .models import Post
 
 
 class BlogListView(ListView):
-    model = Post
+    model = Articles
     template_name = 'home.html'
 
     paginate_by = 1
 
 
 
+class BlogDetailView(FormMixin,DetailView):
+    model = Articles
+    template_name = 'post_detail.html'
+    form_class = CommentForm
+    context_object_name = 'get_post'
+    def get_success_url(self, *args, **kwargs):
+        return reverse_lazy('app:post_detail', kwargs={'pk':self.get_object().id})
 
+    def post(self,request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
-
-
-# def registration(request):
-#     # Renders the registration page.
-#     assert isinstance(request, HttpRequest)
-#     if request.method == "POST":  # после отправки формы
-#         regform = UserCreationForm(request.POST)
-#         if regform.is_valid():  # валидация полей формы
-#             reg_f = regform.save(commit=False)  # не сохраняем автоматически данные формы
-#             reg_f.is_staff = False  # запрещен вход в административный раздел
-#             reg_f.is_active = True  # активный пользователь
-#             reg_f.is_superuser = False  # не является суперпользователем
-#             reg_f.date_joined = datetime.now()  # дата регистрации
-#             reg_f.last_login = datetime.now()  # дата последней авторизации
-#             reg_f.save()  # сохраняем изменения после добавления данных
-#             return redirect('app:home')  # переадресация на главную страницу после регистрации
-#     else:
-#         regform = UserCreationForm()  # создание объекта формы для ввода данных нового пользователя
-#         return render(request, 'registration.html', {'regform': regform, 'year': datetime.now().year, })
+    def form_valid(self,form):
+        self.object = form.save(commit=False)
+        self.object.comment_article = self.get_object()
+        self.object.author = self.request.user
+        self.object.save()
+        return super().form_valid(form)
 
 
 def anketa(request):

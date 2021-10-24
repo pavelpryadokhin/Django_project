@@ -1,7 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
-from django.utils.translation import ugettext_lazy as _
+from .models import  Comments
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model=Comments
+        fields=['comment_text']
 
 class AnketaForm(forms.Form):
     name = forms.CharField(label='Name', min_length=2, max_length=100)
@@ -21,12 +24,3 @@ class AnketaForm(forms.Form):
     message=forms.CharField(label='Коротко о себе',
                             widget=forms.Textarea(attrs={'rows':12,'cols':20}))
 
-# class BootstrapAuthenticationForm(AuthenticationForm):
-#     username = forms.CharField(max_length=254,
-#                                widget=forms.TextInput({
-#                                    'class':'form-control',
-#                                    'placeholder':'Имя'}))
-#     password = forms.CharField(label=('Passworld'),
-#                                widget=forms.PasswordInput({
-#                                    'class':'form=control',
-#                                    'placeholder':'Пароль'}))

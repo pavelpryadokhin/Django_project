@@ -16,8 +16,9 @@
 	<hr>
 	{% for post in object_list %}
 		<div class="post-entry">
-			<h2><a href="">{{ post.title }}</a></h2>
+			<h2><a href="{% url 'app:post_detail' post.pk %}">{{ post.title }}</a></h2>
 			<p>{{ post.body }}</p>
+			<small><p><i>{{post.timestamp | timesince}}&nbsp; Автор:{{post.author}}</i></p></small>
 		</div>
 	{% endfor %}
 {% endblock content %}
