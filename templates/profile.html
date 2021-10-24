@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Profile Page{% endblock title %}
+{% block content %}
+	<h2>Редактирование профиля</h2>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">Редактиорвать</button>
+		<br><br>
+		<a href="{% url 'app:home' %}">Назад</a>
+	</form>
+{% endblock content %}
