@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class Articles(models.Model):
     title = models.CharField(max_length=200,verbose_name='Заголовок')
@@ -18,6 +19,9 @@ class Articles(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('app:post_detail',kwargs={'pk':self.id})
 
 class Comments(models.Model):
     comment_text=models.TextField('Комментарий')
