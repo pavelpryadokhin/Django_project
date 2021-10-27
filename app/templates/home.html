@@ -25,6 +25,7 @@
 			<h2><a href="{% url 'app:post_detail' post.pk %}">{{ post.title }}</a></h2>
 			<p>{{ post.body }}</p>
 			<small><p><i>{{post.timestamp | timesince}}&nbsp; Автор:{{post.author}}</i></p></small>
+			<i><p>Likes:{{ post.post_like }} Dislikes:{{ post.post_dislike }}</p></i>
 		</div>
 	{% endfor %}
 {% endblock content %}

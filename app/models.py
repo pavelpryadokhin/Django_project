@@ -10,6 +10,8 @@ class Articles(models.Model):
     updated=models.DateTimeField('Дата обновления',auto_now=True, auto_now_add=False )
     status=(('r1','Роман'),('p','Поэма'),('r2','Рассказ'),('s','Стих'))
     status= models.CharField('Жанр',choices=status,max_length=2,default='r1')
+    post_like = models.IntegerField('Лайк', default = 0)
+    post_dislike = models.IntegerField('Дизлайк', default = 0)
 
     class Meta:
         verbose_name='Пост'
@@ -22,6 +24,19 @@ class Articles(models.Model):
 
     def get_absolute_url(self):
         return reverse('app:post_detail',kwargs={'pk':self.id})
+
+class Like(models.Model):
+    LIKE_OR_DISLAKE_CHOICES = (
+        ("LIKE", "like"),
+        ("DISLIKE", "dislike"),
+        (None, "None")
+    )
+
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    for_post = models.ForeignKey(Articles, on_delete = models.CASCADE)
+    like_or_dislike = models.CharField(max_length=7,
+                                       choices=LIKE_OR_DISLAKE_CHOICES,
+                                       default=None)
 
 class Comments(models.Model):
     comment_text=models.TextField('Комментарий')
@@ -39,3 +54,4 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.comment_text
+
