@@ -1,6 +1,8 @@
 from django.db import models
 from polls import settings
 from django.utils.safestring import mark_safe
+from django.urls import reverse
+
 
 class Question(models.Model):
     title = models.CharField('Заголовок', max_length=120)
@@ -21,6 +23,11 @@ class Question(models.Model):
 
     is_popular.short_description = 'Популярный'
 
+    def total_votes(self):
+        answers = Answer.objects.filter(question_id=self.id)
+        return sum([answer.votes for answer in answers])
+
+    total_votes.short_description = 'Всего голосов'
 
     class Meta:
         verbose_name = 'Вопрос'

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}question{% endblock title %}
+{% block content %}
+	<h1>Последние опросы</h1>
+	{% if object_list %}
+		<ul>
+			{% for question in object_list%}
+				{% if question.is_active %}
+				<li><a href="{% url 'polls:detail' question.pk %}" >{{ question.title }}</a></li>
+					{% else %}
+					<li>{{ question.title }} &nbsp;(Опрос снят с публикации)</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>Опросы не найдены.</p>
+	{% endif %}
+	<p><i><a href="{% url 'app:home' %}" type="button" class="btn btn-secondary btn-sm"> На главную страницу</a></i></p>
+{% endblock content %}

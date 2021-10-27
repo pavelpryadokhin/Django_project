@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import FormMixin
-from .forms import AnketaForm, CommentForm
+from .forms import  CommentForm
 from datetime import datetime
 from .models import Articles
 from django.urls import reverse_lazy
@@ -55,17 +55,6 @@ class BlogCreateView(CreateView):
         return super().form_valid(form)
 
 
-def anketa(request):
-    assert isinstance(request, HttpRequest)
-    form = AnketaForm(request.POST or None)
-    if request.method == "POST":
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            return HttpResponseRedirect('app:home')
-    else:
-        form=AnketaForm()
-    return render(request,'anketa.html',{'form':form})
 
 # def like_or_dislike(request, post_id, is_like):
 #     try:
