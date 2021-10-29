@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1>{{ name }}</h1>
+	<form method="POST" action="" enctype="multipart/form-data">
+		{% csrf_token %}
+		<p> Заголовок: {{ form.title }}</p>
+		<p>Текст: {{ form.body }}</p>
+		<p> Жанр:{{ form.status }}</p>
+		<input type="submit" value='Peдактировать пост'>
+	</form>
+{% endblock content %}

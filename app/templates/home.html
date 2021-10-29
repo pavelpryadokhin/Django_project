@@ -15,7 +15,7 @@
 		<a href="{% url 'accounts:signup' %}">Регистрация</a>
 		<a href="{% url 'login' %}">Войти</a>
 	{% endif %}
-	<p class="link_1"><a   href="{% url 'polls:index' %}">Пройти опросы</a></p>
+	<p class="link_1"><a href="{% url 'polls:index' %}">Пройти опросы</a></p>
 	<header>
 		<h1><a href="{% url 'app:home' %}">Мой блог</a></h1>
 	</header>
@@ -35,4 +35,6 @@
 			<small><p><i>{{ post.timestamp | timesince }}&nbsp; Автор:{{ post.author }}</i></p></small>
 		</div>
 	{% endfor %}
+
 {% endblock content %}
+

@@ -17,7 +17,16 @@
 		<p>{{ get_post.body | linebreaks }}</p>
 		<p><i>Создан: {{ get_post.timestamp }} Обновлен: {{ get_post.updated }}</i></p>
 		<p>Автор:{{ get_post.author }}</p>
-		{% if  get_post.comments.all%}
+	{% ifequal get_post.author request.user%}
+		<a href="{% url 'app:post_update' get_post.id%}" type="button" class="btn btn-secondary btn-sm"> Редактировать</a>
+		<a href="{% url 'app:post_delete' get_post.id%}" type="button" class="btn btn-secondary btn-sm"> Удалить</a>
+
+	{% endifequal %}
+		<form method="POST" action="" enctype="multipart/form-data">
+			{% csrf_token %}
+			{% include 'vote_article.html' %}
+		</form>
+		{% if  get_post.comments.all %}
 			<p>Комментарии:</p>
 			{% for i in get_post.comments.all %}
 				<div class="comment">
@@ -27,6 +36,7 @@
 					<p>Создан: {{ i.timepublish }}&nbsp;Автор: {{ i.author }}</p>
 				</div>
 			{% endfor %}
+
 			{% with get_post.comments.count as total_comments %}
 				<p><i>Всего комметариев:{{ total_comments }}</i></p>
 			{% endwith %}
@@ -43,8 +53,6 @@
 		{% endif %}
 	</div>
 	<hr>
-	{#<a href="{% url 'app:update' id=instance.id%}" type="button" class="btn btn-secondary btn-sm"> Редактировать</a>#}
-	{#<a href="{% url 'app:delete' id=instance.id%}" type="button" class="btn btn-secondary btn-sm"> Удалить</a>#}
 	<hr>
 	<p><i><a href="{% url 'app:home' %}" type="button" class="btn btn-secondary btn-sm"> На главную страницу</a></i></p>
 {% endblock content %}

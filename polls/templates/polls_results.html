@@ -6,7 +6,7 @@
 		{% for answer in question.answer_set.all|dictsortreversed:"votes" %}
 			<li>{{ answer.answer }} - голосов: {{ answer.votes }}</li>
 		{% endfor %}
-
+		<hr>
 		<p>Всего проголосовали:{{ question.total_votes }}</p>
 	</ul>
 	<a href="{% url 'polls:index' %}">Другие опросы</a>
