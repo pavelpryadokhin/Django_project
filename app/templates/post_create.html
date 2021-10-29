@@ -8,6 +8,8 @@
 		<p>Текст: {{ form.body }}</p>
 		<p> Автор:{{ request.user}}</p>
 		<p> Жанр:{{ form.status }}</p>
+		<p>Загрузить картинку к посту:</p>
+		<p>{{ form.image }}</p>
 		<input type="submit" value='Создать пост'>
 	</form>
 {% endblock content %}

@@ -50,7 +50,7 @@ class BlogDetailView(FormMixin,DetailView):
 class BlogCreateView(CreateView):
     model=Articles
     template_name = 'post_create.html'
-    fields=['title','body','status']
+    fields=['title','body','status','image']
     def form_valid(self,form):
         self.object = form.save(commit=False)
         self.object.author = self.request.user
@@ -60,7 +60,7 @@ class BlogCreateView(CreateView):
 class BlogUpdateView(UpdateView):
     model=Articles
     template_name = 'post_update.html'
-    fields=['title','body','status']
+    fields=['title','body','status','image']
 
 class BloqDeleteView(DeleteView):
     model=Articles

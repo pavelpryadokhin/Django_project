@@ -11,9 +11,9 @@
 {% block content %}
 	<div>
 		<h1>{{ get_post.title }}</h1>
-		{#	{%if instance.image%}#}
-		{#	<p><img src="{{instance.image.url}}" class="img-resposive"></p>#}
-		{#	{%endif%}#}
+			{%if get_post.image%}
+			<p><img src="{{get_post.image.url}}" class="img-resposive"></p>
+			{%endif%}
 		<p>{{ get_post.body | linebreaks }}</p>
 		<p><i>Создан: {{ get_post.timestamp }} Обновлен: {{ get_post.updated }}</i></p>
 		<p>Автор:{{ get_post.author }}</p>

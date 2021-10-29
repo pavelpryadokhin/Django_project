@@ -14,7 +14,8 @@ class Articles(models.Model):
     status = models.CharField('Жанр', choices=status, max_length=2, default='r1')
     post_like = models.IntegerField('Лайк', default=0)
     post_dislike = models.IntegerField('Дизлайк', default=0)
-    image=models.ImageField(verbose_name='Картинкa',blank=True,null=True)
+    image=models.ImageField(verbose_name='Картинкa',blank=True,null=True,upload_to='img')
+
 #TODO: pip install pillow
     class Meta:
         verbose_name = 'Пост'
